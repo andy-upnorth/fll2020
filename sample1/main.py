@@ -39,7 +39,7 @@ arm = Motor(Port.D)
 # move at the correct speed when you give a motor command.
 # The axle track is the distance between the points where the wheels
 # touch the ground.
-robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=104)
+robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=165)
 
 # We tried a few acceleration values.  2 is crazy slow...  
 #   400 seems to work.  the original made the robot jump when starting
@@ -147,16 +147,26 @@ arm.run_angle(100, -20)
 
 ev3.light.on(Color.GREEN)
 
-drive_to_start()
+#drive_to_start()
 
 # reset the distance counter
 robot.reset()
 
+# first 
 drive_to_white_black_white()
+
+# second one
+drive_to_white_black_white()
+
+
+robot.turn(-90)
+robot.straight(200)
+# now maybe follow line
+
 
 # return 
 #robot.straight(-200)
-robot.straight(-1 * robot.distance())
+#robot.straight(-1 * robot.distance())
 
 # The following loop makes the robot drive forward until it detects an
 # obstacle. Then it backs up and turns around. It keeps on doing this
