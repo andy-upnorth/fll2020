@@ -100,6 +100,33 @@ def drive_to_start():
 
     #robot.stop()
 
+#
+# This function simply wags the arm around until the
+# ultrasonic distance sensor doesn't detect
+# anything within 100cm  (1000mm)
+#
+def wag_arm():
+
+    ev3.light.on(Color.GREEN)
+
+    arm.run_angle(100, -180)
+
+    while obstacle_sensor.distance() < 1000:
+
+        while obstacle_sensor.distance() < 300:
+            ev3.light.on(Color.YELLOW)
+            arm.run_angle(100, 120)
+            arm.run_angle(100, -120)
+            wait(10)
+
+        ev3.light.on(Color.GREEN)
+        arm.run_angle(100, 60)
+        arm.run_angle(100, -60)
+
+    ev3.light.on(Color.RED)
+    arm.run_angle(100, 150)
+
+
 
 ev3.light.on(Color.RED)
 # beeper()
@@ -108,23 +135,8 @@ ev3.light.on(Color.RED)
 arm.run_until_stalled(400)
 arm.run_angle(100, -20)
 
-ev3.light.on(Color.GREEN)
+# do somthing with the arm
+wag_arm()
 
-arm.run_angle(100, -180)
 
-while obstacle_sensor.distance() < 1000:
-
-    while obstacle_sensor.distance() < 300:
-        ev3.light.on(Color.YELLOW)
-        arm.run_angle(100, 120)
-        arm.run_angle(100, -120)
-        wait(10)
-
-    ev3.light.on(Color.GREEN)
-    arm.run_angle(100, 60)
-    arm.run_angle(100, -60)
-
-ev3.light.on(Color.RED)
-arm.run_angle(100, 150)
-
-#ev3.speaker.say("arrived")
+ev3.speaker.say("the end")
