@@ -42,15 +42,14 @@ if common.CAN_DRIVE:
         #missions.turn_from_white_bar_to_arch()
 
 
-        # do entire step counter
-        #missions.do_step_counter()
+        # do entire step counter - and the treadmill
+        missions.do_step_counter()
 
-        # Continue on line to and do treadmill
-        #mover.follow_until_treadmill()
-        #missions.climb_and_spin_treadmill()
+        missions.do_treadmill_after_steps()
+        missions.do_weights_after_treadmill()
 
         # Do entire treadmill mission from start
-        missions.do_treadmill_from_start()
+        #missions.do_treadmill_from_start()
 
 
     # Do other missions that do not need the treadmill arm

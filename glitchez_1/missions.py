@@ -99,14 +99,14 @@ def climb_and_spin_treadmill():
     TREADMILL_ANGLE=1700
     common.treadmill_motor.run_angle(TREADMILL_SPEED, TREADMILL_ANGLE, Stop.BRAKE)
 
-    # Climb onto treadmill using all 3 wheels.
+    # Climb off treadmill using all 3 wheels.
     common.treadmill_motor.run_angle(CLIMB_SPEED, -4 * CLIMB_ANGLE, Stop.COAST, False)
     common.left_motor.run_angle(CLIMB_SPEED, -4 * CLIMB_ANGLE, Stop.COAST, False)
     common.right_motor.run_angle(CLIMB_SPEED, -4 * CLIMB_ANGLE, Stop.COAST, False)
 
-    for i in range(3):
-        ev3.speaker.beep(duration=750)
-        wait(700)
+    for i in range(2):
+        ev3.speaker.beep(duration=500)
+        wait(450)
 
 
 def do_treadmill_from_start():
@@ -119,4 +119,21 @@ def do_treadmill_from_start():
     mover.follow_until_treadmill()
 
     climb_and_spin_treadmill()
+
+def do_treadmill_after_steps():
+
+    # Continue on line to and do treadmill
+    mover.follow_until_treadmill()
+    climb_and_spin_treadmill()
+
+
+'''
+Weight machine after treadmill
+'''
+
+def do_weights_after_treadmill():
+    robot.turn(-45)
+    robot.straight(100)
+    
+    # more to come
 
