@@ -37,10 +37,21 @@ common.ev3.light.on(Color.RED)
 if common.CAN_DRIVE:
    
    if common.HAVE_WHEEL_ARM:
-        #mover.drive_to_second_and_turn()
-        missions.do_step_counter()
+        # Quick testing
         #missions.wiggle_step()
         #missions.turn_from_white_bar_to_arch()
+
+
+        # do entire step counter
+        #missions.do_step_counter()
+
+        # Continue on line to and do treadmill
+        #mover.follow_until_treadmill()
+        #missions.climb_and_spin_treadmill()
+
+        # Do entire treadmill mission from start
+        missions.do_treadmill()
+
 
     # Do other missions that do not need the treadmill arm
 

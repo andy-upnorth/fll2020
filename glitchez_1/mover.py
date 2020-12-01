@@ -19,6 +19,17 @@ COLOR_WAIT_MINIMUM = 160
 # This sort of fast, so we might change if it is hard to steer.
 ROBOT_STRAIGHT_SPEED = 250
 
+# Set the drive speed at 100 millimeters per second.
+LINE_DRIVE_SPEED = 100
+
+
+# Calculate the light threshold. Choose values based on your measurements.
+BLACK = 5
+WHITE = 45
+line_threshold = (BLACK + WHITE) / 2
+
+
+
 # The DriveBase is composed of two motors, with a wheel on each motor.
 # The wheel_diameter and axle_track values are used to make the motors
 # move at the correct speed when you give a motor command.
@@ -35,6 +46,11 @@ robot.settings(straight_speed=ROBOT_STRAIGHT_SPEED)
 #   400 seems to work.  the original made the robot jump when starting
 robot.distance_control.limits(acceleration=500)
 
+
+'''
+Driving to lines
+--------------------
+'''
 
 wait_sensor_timer = StopWatch()
 
@@ -157,3 +173,54 @@ def drive_to_second_and_turn():
     # now maybe follow line
 
 
+
+
+'''
+Line following
+--------------------
+'''
+
+# Set the gain of the proportional line controller. This means that for every
+# percentage point of light deviating from the threshold, we set the turn
+# rate of the drivebase to 1.2 degrees per second.
+
+# For example, if the light value deviates from the threshold by 10, the robot
+# steers at 10*1.2 = 12 degrees per second.
+PROPORTIONAL_GAIN = 3.0 # 1.2
+
+
+def follow_until_treadmill():
+    common.treadmill_motor.set_dc_settings(30, 0)
+    common.treadmill_motor.run(-300)
+
+    # Follow line until arm motor stalls.
+    while (common.treadmill_motor.stalled() == False):
+        # Calculate the deviation from the threshold.
+        deviation = common.line_sensor.reflection() - line_threshold
+        
+        # Calculate the turn rate.
+        turn_rate = PROPORTIONAL_GAIN * deviation
+
+        # Set the drive base speed and turn rate.
+        robot.drive(LINE_DRIVE_SPEED, turn_rate)
+
+        # You can wait for a short time or do other things in this loop.
+        wait(10)
+
+
+def follow_distance(how_far):
+    robot.reset()
+
+    # Follow line until arm motor stalls.
+    while (robot.distance() < how_far):
+        # Calculate the deviation from the threshold.
+        deviation = common.line_sensor.reflection() - line_threshold
+        
+        # Calculate the turn rate.
+        turn_rate = PROPORTIONAL_GAIN * deviation
+
+        # Set the drive base speed and turn rate.
+        robot.drive(LINE_DRIVE_SPEED, turn_rate)
+
+        # You can wait for a short time or do other things in this loop.
+        wait(10)

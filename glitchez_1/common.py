@@ -6,7 +6,7 @@ Shared config values used across all modules
 
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, UltrasonicSensor, ColorSensor
-from pybricks.parameters import Port, Color, Direction, Button
+from pybricks.parameters import Port, Color, Direction, Button, Stop
 from pybricks.tools import wait, StopWatch
 from pybricks.robotics import DriveBase
 
