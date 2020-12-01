@@ -108,7 +108,8 @@ def climb_and_spin_treadmill():
         ev3.speaker.beep(duration=750)
         wait(700)
 
-def do_treadmill():
+
+def do_treadmill_from_start():
 
     # Drive forward up to 30 centimeters until the robot finds the line.
     while common.line_sensor.reflection() > mover.line_threshold:

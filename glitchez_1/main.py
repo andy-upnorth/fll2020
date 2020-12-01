@@ -50,7 +50,7 @@ if common.CAN_DRIVE:
         #missions.climb_and_spin_treadmill()
 
         # Do entire treadmill mission from start
-        missions.do_treadmill()
+        missions.do_treadmill_from_start()
 
 
     # Do other missions that do not need the treadmill arm
