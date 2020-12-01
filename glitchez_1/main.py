@@ -22,7 +22,7 @@ import arm
 
 if common.CAN_DRIVE:
     import drive
-    common.ev3.speaker.say("ready to drive")
+    #common.ev3.speaker.say("ready to drive")
 
 #
 # Done with setup.
@@ -34,7 +34,12 @@ common.ev3.light.on(Color.RED)
 
 
 if common.CAN_DRIVE:
-    drive_to_second_and_turn()
+   
+    #drive.drive_to_second_and_turn()
+    drive.do_step_counter()
+    #drive.wiggle_step()
+    #drive.turn_from_white_bar_to_arch()
+
 
 else:
     # do somthing with the arm

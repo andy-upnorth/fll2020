@@ -14,7 +14,7 @@ from pybricks.tools import wait, StopWatch
 from pybricks.robotics import DriveBase
 
 # Minimum millseconds to wait to make sure a color band is wide enough
-COLOR_WAIT_MINIMUM = 120
+COLOR_WAIT_MINIMUM = 160
 
 # The DriveBase is composed of two motors, with a wheel on each motor.
 # The wheel_diameter and axle_track values are used to make the motors
@@ -79,11 +79,11 @@ def wait_until_not_color(the_color):
 
 
 def drive_to_start():
-    common.ev3.speaker.say("Giddy up")
+    
     common.line_sensor.color() # switch to color mode
 
     # Begin driving forward
-    robot.drive(600, 0)
+    robot.drive(270, 0)
 
     # look for white 
     wait_until_not_color(Color.WHITE)
@@ -92,7 +92,7 @@ def drive_to_start():
 
 
 def drive_to_white_black_white():
-    common.ev3.speaker.say("drive to white, black, white")
+    
     common.line_sensor.color() # switch to color mode
 
     # Begin driving forward
@@ -112,7 +112,19 @@ def drive_to_white_black_white():
     common.ev3.light.on(Color.RED)
     robot.stop()
     
-    common.ev3.speaker.say("arrived")
+
+
+def drive_to_white(speed):
+    
+    common.line_sensor.color() # switch to color mode
+
+    # Begin driving - could be forward or backward
+    robot.drive(speed, 0)
+
+    # look for white 
+    wait_for_color(Color.WHITE)
+
+    robot.stop()
 
 
 
@@ -135,4 +147,53 @@ def drive_to_second_and_turn():
     robot.turn(-90)
     robot.straight(200)
     # now maybe follow line
+
+def wiggle_step():
+
+    #common.ev3.speaker.say("step forward")
+    
+    for x in range (13):
+        robot.straight(-20)
+        robot.turn(-0.5)
+        robot.straight(37)
+
+    # back up until we get to white bar
+    robot.straight(-100)
+    drive_to_white(-100)
+
+
+def turn_from_white_bar_to_arch():
+
+    # this starts already on white.  move ahead
+    robot.straight(20) 
+
+    robot.turn(-20)
+    robot.straight(110)
+    robot.turn(-20)
+    #robot.straight(50)
+    robot.straight(120)
+
+    #robot.drive(140, -65)
+    robot.reset()
+    #robot.drive(100, -60)
+
+    robot.drive(80, 0)
+    wait_for_color(Color.BLACK)
+    robot.straight(40)
+    robot.turn(20)
+    robot.stop()
+
+
+
+def do_step_counter():
+
+    drive_to_start()
+
+    drive_to_white_black_white()
+
+    wiggle_step()
+
+    turn_from_white_bar_to_arch()
+
+
 

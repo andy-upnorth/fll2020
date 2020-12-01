@@ -6,7 +6,7 @@ Shared config values used across all modules
 
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, UltrasonicSensor, ColorSensor
-from pybricks.parameters import Port, Color, Button
+from pybricks.parameters import Port, Color, Direction, Button
 from pybricks.tools import wait, StopWatch
 from pybricks.robotics import DriveBase
 
@@ -16,16 +16,16 @@ ev3 = EV3Brick()
 
 # Initialize the Ultrasonic Sensor. It is used to detect
 # obstacles as the robot drives around.
-obstacle_sensor = UltrasonicSensor(Port.S2)
+#obstacle_sensor = UltrasonicSensor(Port.S2)
 
 # Initialize the color sensor.
-line_sensor = ColorSensor(Port.S3)
+line_sensor = ColorSensor(Port.S4)
 
 # 
-arm = Motor(Port.D)
+arm = Motor(Port.A, Direction.CLOCKWISE)
 
 # Rotating Wheel 
-#wheelie = Motor(Port.A)
+wheelie = Motor(Port.D)
 
 CAN_DRIVE = False
 

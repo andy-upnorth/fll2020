@@ -43,9 +43,10 @@ def wag_arm():
 
 def to_low_start():
     # move the arm down before starting
-    common.arm.run_until_stalled(400)
-    common.arm.run_angle(100, -20)
+    common.arm.run_until_stalled(-400)
+    common.arm.stop()
+    #common.arm.run_angle(100, -20)
 
 to_low_start()
 
-common.ev3.speaker.say("arm is ready")
+
