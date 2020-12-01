@@ -40,6 +40,7 @@ if common.CAN_DRIVE:
         # Quick testing
         #missions.wiggle_step()
         #missions.turn_from_white_bar_to_arch()
+        #mover.turn_north(-50)
 
 
         # do entire step counter - and the treadmill
@@ -51,9 +52,9 @@ if common.CAN_DRIVE:
         # Do entire treadmill mission from start instead
         #missions.do_treadmill_from_start()
 
-    else:
+    #else:
         # Do other missions that do not need the treadmill arm
-        missions.do_pullup()
+    #    missions.do_pullup()
 
 
 else:

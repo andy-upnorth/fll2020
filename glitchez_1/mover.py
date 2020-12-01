@@ -173,7 +173,28 @@ def drive_to_second_and_turn():
     # now maybe follow line
 
 
+GYRO_NORTH = -84
+GYRO_WEST = -170
 
+def turn_north(turn_rate):
+    robot.stop()
+    robot.drive(0, turn_rate)
+    while(common.gyro.angle() > GYRO_NORTH):
+        continue
+
+    robot.stop()
+    current_angle = common.gyro.angle()
+    print("Angle is ." + str(current_angle))
+
+def turn_west(turn_rate):
+    robot.stop()
+    robot.drive(0, turn_rate)
+    while(common.gyro.angle() > GYRO_WEST):
+        continue
+
+    robot.stop()
+    current_angle = common.gyro.angle()
+    print("Angle is ." + str(current_angle))
 
 '''
 Line following

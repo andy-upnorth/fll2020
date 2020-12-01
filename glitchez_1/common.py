@@ -5,7 +5,7 @@ Shared config values used across all modules
 """
 
 from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor, UltrasonicSensor, ColorSensor
+from pybricks.ev3devices import Motor, UltrasonicSensor, ColorSensor, GyroSensor
 from pybricks.parameters import Port, Color, Direction, Button, Stop
 from pybricks.tools import wait, StopWatch
 from pybricks.robotics import DriveBase
@@ -21,11 +21,16 @@ ev3 = EV3Brick()
 # Initialize the color sensor.
 line_sensor = ColorSensor(Port.S4)
 
+gyro = GyroSensor(Port.S2, Direction.CLOCKWISE)
+
 # 
 arm = Motor(Port.A, Direction.CLOCKWISE)
 
 CAN_DRIVE = False
 HAVE_WHEEL_ARM = False
+
+
+gyro.reset_angle(0)
 
 # Initialize two motors with default settings on Port B and Port C.
 # These will be the left and right motors of the drive base.

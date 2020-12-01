@@ -146,9 +146,26 @@ Drive around long way
 def drive_long_way_after_treadmill():
     robot.turn(-45)
     robot.straight(100)
-    robot.turn(-45)
-    robot.straight(100)
+    mover.turn_north(-80)
+ 
+    # smash againt back wall?
+    #robot.turn(-45)
+    #robot.straight(100)
+    #robot.drive(-200, 0)
+    #wait(1500)
+    #robot.stop()
 
+    robot.straight(200)
+    mover.drive_to_white_black_white()
+    mover.turn_west(-80)
+    #robot.turn(-93)
+ 
+    robot.straight(800)
+
+    mover.drive_to_white(150)
+
+    robot.turn(-45)
+    robot.straight(800)
 
 
 
