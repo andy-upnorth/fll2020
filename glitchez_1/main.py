@@ -46,17 +46,18 @@ if common.CAN_DRIVE:
         missions.do_step_counter()
 
         missions.do_treadmill_after_steps()
-        missions.do_weights_after_treadmill()
+        missions.drive_long_way_after_treadmill()
 
         # Do entire treadmill mission from start instead
         #missions.do_treadmill_from_start()
 
-
-    # Do other missions that do not need the treadmill arm
+    else:
+        # Do other missions that do not need the treadmill arm
+        missions.do_pullup()
 
 
 else:
     # do somthing with the arm
     #arm.wag_arm()
+    common.ev3.speaker.say(" i like minecraft i want to play it now")
 
-    missions.do_pullup()

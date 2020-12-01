@@ -128,16 +128,26 @@ def do_treadmill_after_steps():
 
 
 '''
-Weight machine after treadmill
+Rowing machine after treadmill
 '''
 
-def do_weights_after_treadmill():
+def do_rowing_after_treadmill():
     robot.turn(-45)
     robot.straight(100)
 
     # more to come.
     # does not work with this
     #climb_and_spin_treadmill()
+
+
+'''
+Drive around long way
+'''
+def drive_long_way_after_treadmill():
+    robot.turn(-45)
+    robot.straight(100)
+    robot.turn(-45)
+    robot.straight(100)
 
 
 
