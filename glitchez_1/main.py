@@ -43,12 +43,12 @@ if common.CAN_DRIVE:
 
 
         # do entire step counter - and the treadmill
-        #missions.do_step_counter()
+        missions.do_step_counter()
 
-        #missions.do_treadmill_after_steps()
+        missions.do_treadmill_after_steps()
         missions.do_weights_after_treadmill()
 
-        # Do entire treadmill mission from start
+        # Do entire treadmill mission from start instead
         #missions.do_treadmill_from_start()
 
 
