@@ -24,10 +24,8 @@ line_sensor = ColorSensor(Port.S4)
 # 
 arm = Motor(Port.A, Direction.CLOCKWISE)
 
-# Rotating Wheel 
-wheelie = Motor(Port.D)
-
 CAN_DRIVE = False
+HAVE_WHEEL_ARM = False
 
 # Initialize two motors with default settings on Port B and Port C.
 # These will be the left and right motors of the drive base.
@@ -41,6 +39,20 @@ try:
 except OSError:
     print("No drive motors attached.  Disabled driving.")
     ev3.speaker.say("I cannot drive")
+
+# Initialize the treadmill arm and mark it as available
+try:
+
+    # Rotating Wheel 
+    treadmill_motor = Motor(Port.D)
+    HAVE_WHEEL_ARM = True
+
+except OSError:
+    print("No treadmill arm attached.  Disabled WHEEL_ARM.")
+    ev3.speaker.say("No tread mill arm")
+
+
+
 
 
 def beeper():

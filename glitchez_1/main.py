@@ -19,9 +19,10 @@ from pybricks.robotics import DriveBase
 
 import common
 import arm
+import missions
 
 if common.CAN_DRIVE:
-    import drive
+    import mover
     #common.ev3.speaker.say("ready to drive")
 
 #
@@ -35,10 +36,13 @@ common.ev3.light.on(Color.RED)
 
 if common.CAN_DRIVE:
    
-    #drive.drive_to_second_and_turn()
-    drive.do_step_counter()
-    #drive.wiggle_step()
-    #drive.turn_from_white_bar_to_arch()
+   if common.HAVE_WHEEL_ARM:
+        #mover.drive_to_second_and_turn()
+        missions.do_step_counter()
+        #missions.wiggle_step()
+        #missions.turn_from_white_bar_to_arch()
+
+    # Do other missions that do not need the treadmill arm
 
 
 else:
