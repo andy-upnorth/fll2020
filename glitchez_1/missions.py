@@ -18,16 +18,25 @@ from pybricks.robotics import DriveBase
 
 def wiggle_step():
 
-    #common.ev3.speaker.say("step forward")
     
     for x in range (13):
         robot.straight(-20)
-        robot.turn(-0.5)
+        robot.turn(-0.6)
+
+        # slow wiggle works better
+        robot.stop()
+        robot.settings(straight_speed=55)
         robot.straight(37)
+    
+        # faster again
+        robot.stop()
+        robot.settings(straight_speed = mover.ROBOT_STRAIGHT_SPEED)
+
 
     # back up until we get to white bar
     robot.straight(-100)
     mover.drive_to_white(-100)
+
 
 
 def turn_from_white_bar_to_arch():

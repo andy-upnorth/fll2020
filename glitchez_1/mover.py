@@ -16,12 +16,20 @@ from pybricks.robotics import DriveBase
 # Minimum millseconds to wait to make sure a color band is wide enough
 COLOR_WAIT_MINIMUM = 160
 
+# This sort of fast, so we might change if it is hard to steer.
+ROBOT_STRAIGHT_SPEED = 250
+
 # The DriveBase is composed of two motors, with a wheel on each motor.
 # The wheel_diameter and axle_track values are used to make the motors
 # move at the correct speed when you give a motor command.
 # The axle track is the distance between the points where the wheels
 # touch the ground.
 robot = DriveBase(common.left_motor, common.right_motor, wheel_diameter=55.5, axle_track=165)
+
+# This is fast, so we might lower the max later.
+
+robot.settings(straight_speed=ROBOT_STRAIGHT_SPEED)
+
 
 # We tried a few acceleration values.  2 is crazy slow...  
 #   400 seems to work.  the original made the robot jump when starting
