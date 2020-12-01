@@ -43,9 +43,9 @@ if common.CAN_DRIVE:
 
 
         # do entire step counter - and the treadmill
-        missions.do_step_counter()
+        #missions.do_step_counter()
 
-        missions.do_treadmill_after_steps()
+        #missions.do_treadmill_after_steps()
         missions.do_weights_after_treadmill()
 
         # Do entire treadmill mission from start
@@ -57,4 +57,6 @@ if common.CAN_DRIVE:
 
 else:
     # do somthing with the arm
-    arm.wag_arm()
+    #arm.wag_arm()
+
+    missions.do_pullup()

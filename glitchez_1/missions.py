@@ -134,6 +134,30 @@ Weight machine after treadmill
 def do_weights_after_treadmill():
     robot.turn(-45)
     robot.straight(100)
-    
-    # more to come
+
+    # more to come.
+    # does not work with this
+    #climb_and_spin_treadmill()
+
+
+
+
+'''
+Pull up
+'''
+
+def do_pullup():
+
+    # todo: drive here and line up
+
+    # todo: get arm back and ready
+
+    # Pull up
+    common.arm.run_angle(-500, 250, Stop.BRAKE)
+
+    ev3.beep()
+
+    # todo: wait a long time.
+
+
 
