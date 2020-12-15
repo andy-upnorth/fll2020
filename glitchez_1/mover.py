@@ -20,12 +20,12 @@ COLOR_WAIT_MINIMUM = 160
 ROBOT_STRAIGHT_SPEED = 250
 
 # Set the drive speed at 100 millimeters per second.
-LINE_DRIVE_SPEED = 100
+LINE_DRIVE_SPEED = 90
 
 
 # Calculate the light threshold. Choose values based on your measurements.
-BLACK = 5
-WHITE = 45
+BLACK = 11
+WHITE = 88
 line_threshold = (BLACK + WHITE) / 2
 
 
