@@ -24,8 +24,8 @@ LINE_DRIVE_SPEED = 90
 
 
 # Calculate the light threshold. Choose values based on your measurements.
-BLACK = 11
-WHITE = 88
+BLACK = 30
+WHITE = 99
 line_threshold = (BLACK + WHITE) / 2
 
 
@@ -100,14 +100,14 @@ def wait_for_color(the_color):
 def wait_until_not_color(the_color):
     while True:
         common.ev3.light.on(Color.YELLOW)
-        if common.line_sensor.color() == the_color:
+        if common.color_sensor.color() == the_color:
             continue # this jumps back to the start of the loop
 
         # Sensor found at least a small spot without the_color, so now
         # start a timer and make sure that the we don't get back onto
         # the_color too soon
         wait_sensor_timer.reset()
-        while common.line_sensor.color() != the_color:
+        while common.color_sensor.color() != the_color:
             if wait_sensor_timer.time() > COLOR_WAIT_MINIMUM: # enough time already
                 return
             common.ev3.light.on(Color.RED)
@@ -118,10 +118,10 @@ def wait_until_not_color(the_color):
 
 def drive_to_start():
     
-    common.line_sensor.color() # switch to color mode
+    common.color_sensor.color() # switch to color mode
 
     # Begin driving forward
-    robot.drive(270, 0)
+    robot.drive(170, 0)
 
     # look for white 
     wait_until_not_color(Color.WHITE)
@@ -129,17 +129,17 @@ def drive_to_start():
     robot.stop()
 
 
-def drive_to_white_black_white():
+def drive_to_white_black_white(speed = 110):
     
     common.line_sensor.color() # switch to color mode
 
     # Begin driving forward
-    robot.drive(130, 0)
+    robot.drive(speed, 0)
 
     # look for white 
     wait_for_color(Color.WHITE)
 
-    robot.drive(90, 0)
+    robot.drive(speed, 0)
 
     # look for black
     wait_for_color(Color.BLACK)
@@ -227,6 +227,7 @@ PROPORTIONAL_GAIN = 3.0 # 1.2
 def follow_until_treadmill():
     common.treadmill_motor.set_dc_settings(30, 0)
     common.treadmill_motor.run(-300)
+    common.line_sensor.reflection()
 
     # Follow line until arm motor stalls.
     while (common.treadmill_motor.stalled() == False):

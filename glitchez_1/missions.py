@@ -149,15 +149,15 @@ def drive_long_way_after_treadmill():
     mover.turn_north(-80)
  
     # smash againt back wall?
-    #robot.turn(-45)
-    #robot.straight(100)
-    #robot.drive(-200, 0)
-    #wait(1500)
-    #robot.stop()
+    robot.turn(-45)
+    robot.straight(100)
+    robot.drive(-200, 0)
+    wait(1500)
+    robot.stop()
 
-    robot.straight(200)
-    mover.drive_to_white_black_white()
-    mover.turn_west(-80)
+    #robot.straight(200)
+    #mover.drive_to_white_black_white()
+    #mover.turn_west(-80)
     #robot.turn(-93)
  
     robot.straight(800)
@@ -210,14 +210,44 @@ def do_boccia():
 
 def do_lift_basket():
 
-    robot.straight(200)
-    robot.straight(-30)
+    robot.straight(180)
+    robot.straight(-10)
+    robot.turn(16)
+    robot.straight(15)
 
-    # common.arm.run_until_stalled(100)
+    #common.arm.run_until_stalled(100)
+    robot.straight(-13)
+
+    # The arm keeps stalling here..........??
+    # want to check 3 things 
+    #  - is it stalled
+    #  - is it too high
+    # maybe loop
+    #  - goal is high enough
+    #  - lift up until goal.. or stalled
+    #  - if not at goal then move down and try again
+
     # common.arm.run_until_stalled(-100)
-    common.arm.run_angle(150, 114, Stop.BRAKE)
+    #common.arm.run_angle(100, 104, Stop.BRAKE)
+    common.arm.run_angle(130, 104, Stop.BRAKE)
+
 
     common.arm.run_until_stalled(-400)
 
     robot.straight(-60)
+
+
+def do_smash_bench():
+
+    robot.turn(125)
+
+    #mover.drive_to_white(-100)
+
+    robot.straight(-300)
+    # tried sensor, but sometimes it did not hit.
+    #mover.drive_to_white_black_white(-100)
+
+    robot.straight(100)
+    robot.turn(40)
+    robot.straight(-700)
 

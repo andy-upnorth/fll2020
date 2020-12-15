@@ -53,10 +53,13 @@ if common.CAN_DRIVE:
         #missions.do_treadmill_from_start()
     else:
 
+        mover.drive_to_start()
+        # need to add a line finder
+        
         mover.follow_someting(3)
         missions.do_boccia()
         missions.do_lift_basket()
-
+        missions.do_smash_bench()
 
     #else:
         # Do other missions that do not need the treadmill arm
