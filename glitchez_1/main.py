@@ -53,7 +53,7 @@ if common.CAN_DRIVE:
         #missions.do_treadmill_from_start()
     else:
 
-        #mover.follow_distance(1500)
+        mover.follow_someting(3)
         missions.do_boccia()
         missions.do_lift_basket()
 

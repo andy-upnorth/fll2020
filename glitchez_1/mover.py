@@ -47,6 +47,20 @@ robot.settings(straight_speed=ROBOT_STRAIGHT_SPEED)
 robot.distance_control.limits(acceleration=500)
 
 
+# Adjust the line follow and keep going
+def check_n_turn():
+    # Calculate the deviation from the threshold.
+    deviation = common.line_sensor.reflection() - line_threshold
+    
+    # Calculate the turn rate.
+    turn_rate = PROPORTIONAL_GAIN * deviation
+
+    # Set the drive base speed and turn rate.
+    robot.drive(LINE_DRIVE_SPEED, turn_rate)
+
+
+
+
 '''
 Driving to lines
 --------------------
@@ -232,7 +246,7 @@ def follow_until_treadmill():
 def follow_distance(how_far):
     robot.reset()
 
-    # Follow line until arm motor stalls.
+    # Follow line ...............
     while (robot.distance() < how_far):
         # Calculate the deviation from the threshold.
         deviation = common.line_sensor.reflection() - line_threshold
@@ -245,3 +259,55 @@ def follow_distance(how_far):
 
         # You can wait for a short time or do other things in this loop.
         wait(10)
+
+
+
+
+
+
+# This function will return after the color sensor sees
+# the_color for at least COLOR_WAIT_MINIMUM milliseconds
+def follow_until_color(the_color):
+    while True:
+        common.ev3.light.on(Color.YELLOW)
+
+        check_n_turn()
+
+        if common.color_sensor.color() != the_color:
+            continue # this jumps back to the start of the loop
+
+        # Sensor found a glimmer of the_color, so now
+        # start a timer and make sure that the same color is
+        # visibile for a while
+        wait_sensor_timer.reset()
+        while common.color_sensor.color() == the_color:
+            if wait_sensor_timer.time() > COLOR_WAIT_MINIMUM: # enough time already
+                return
+            common.ev3.light.on(Color.RED)
+            check_n_turn()
+            continue
+        
+        # Fell out of the loop because the color changed.
+        # But maybe it was big enough anyway
+        if wait_sensor_timer.time() > COLOR_WAIT_MINIMUM/2: # This is long enough
+            return
+    
+        # otherwise go through the loop again
+
+
+def follow_someting(how_many):
+   
+    common.line_sensor.reflection() # for line following
+    common.color_sensor.color() # switch to color mode
+
+    # Begin driving forward
+    robot.drive(130, 0)
+
+    for x in range (how_many):
+        follow_until_color(Color.WHITE)
+        follow_until_color(Color.BLACK)
+        follow_until_color(Color.WHITE)
+
+    robot.stop()
+
+
