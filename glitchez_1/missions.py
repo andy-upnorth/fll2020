@@ -104,7 +104,7 @@ def climb_and_spin_treadmill():
     common.left_motor.run_angle(CLIMB_SPEED, -4 * CLIMB_ANGLE, Stop.COAST, False)
     common.right_motor.run_angle(CLIMB_SPEED, -4 * CLIMB_ANGLE, Stop.COAST, False)
 
-    for i in range(2):
+    for i in range(3):
         ev3.speaker.beep(duration=500)
         wait(450)
 
@@ -187,4 +187,37 @@ def do_pullup():
     # todo: wait a long time.
 
 
+
+
+
+'''
+
+'''
+
+def do_boccia():
+
+    # todo: drive here and line up
+
+    robot.straight(-30)
+    robot.turn(22)
+    common.arm.run_until_stalled(200)
+
+    robot.straight(-50)
+    common.arm.run_until_stalled(-600)
+    robot.turn(-90)
+    #common.arm.run_until_stalled(-60)
+
+
+def do_lift_basket():
+
+    robot.straight(200)
+    robot.straight(-30)
+
+    # common.arm.run_until_stalled(100)
+    # common.arm.run_until_stalled(-100)
+    common.arm.run_angle(150, 114, Stop.BRAKE)
+
+    common.arm.run_until_stalled(-400)
+
+    robot.straight(-60)
 

@@ -36,7 +36,7 @@ common.ev3.light.on(Color.RED)
 
 if common.CAN_DRIVE:
    
-   if common.HAVE_WHEEL_ARM:
+    if common.HAVE_WHEEL_ARM:
         # Quick testing
         #missions.wiggle_step()
         #missions.turn_from_white_bar_to_arch()
@@ -51,6 +51,12 @@ if common.CAN_DRIVE:
 
         # Do entire treadmill mission from start instead
         #missions.do_treadmill_from_start()
+    else:
+
+        #mover.follow_distance(1500)
+        missions.do_boccia()
+        missions.do_lift_basket()
+
 
     #else:
         # Do other missions that do not need the treadmill arm
