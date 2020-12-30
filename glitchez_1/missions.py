@@ -36,7 +36,7 @@ def wiggle_step():
 
     # back up until we get to white bar
     robot.straight(-100)
-    mover.drive_to_white(-100)
+    mover.drive_to_white_on_right_line_sensor(-100)
 
 
 
@@ -66,7 +66,7 @@ def do_step_counter():
 
     mover.drive_to_start()
 
-    mover.drive_to_white_black_white()
+    mover.drive_to_white_black_white_left_color_sensor()
 
     wiggle_step()
 
@@ -144,31 +144,67 @@ def do_rowing_after_treadmill():
 
 
 '''
-Drive around long way
+Drive to back wall
 '''
-def drive_long_way_after_treadmill():
+def drive_to_north_line_after_treadmill():
+
+    robot.straight(-100)
+    #mover.drive_to_white_black_white_left_color_sensor(-100)
+
     robot.turn(-45)
     robot.straight(100)
-    mover.turn_north(-80)
  
     # smash againt back wall?
     robot.turn(-45)
     robot.straight(100)
+    robot.turn(-15)
     robot.drive(-200, 0)
     wait(1500)
     robot.stop()
 
-    #robot.straight(200)
-    #mover.drive_to_white_black_white()
-    #mover.turn_west(-80)
-    #robot.turn(-93)
- 
-    robot.straight(800)
+    # forward some 
+    robot.straight(140)
 
-    mover.drive_to_white(150)
+    mover.drive_to_white_black_white_left_color_sensor(130)
+    #mover.drive_to_white_on_right_line_sensor(80)
+
+    # Arrived at long line at north end
+
+
+def do_weights_from_north_line():
 
     robot.turn(-45)
-    robot.straight(800)
+    robot.straight(110)
+    robot.turn(45)
+    # now facing north
+
+    # now angle to weights and run into it
+    common.arm.run_until_stalled(400)
+
+    # This turn and drive does not always work
+    robot.turn(34)
+    robot.straight(200)
+
+    # smash and back up
+    common.arm.run_until_stalled(-200)
+    robot.straight(-100)
+
+
+def drive_home_from_weights():
+    robot.turn(-135)
+    mover.drive_to_white_black_white_right_line_sensor()
+
+    robot.turn(-20)
+    robot.straight(100)
+
+    # attempt to drive home.  but it is not perfect
+    robot.turn(40)
+    mover.drive_to_white_black_white_right_line_sensor(speed = 160)
+    mover.drive_to_white_black_white_right_line_sensor(speed = 180)
+    mover.drive_to_white_black_white_right_line_sensor(speed = 180)
+    robot.turn(-40)
+    robot.straight(900)
+
 
 
 

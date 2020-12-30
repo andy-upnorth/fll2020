@@ -156,7 +156,7 @@ def drive_to_start():
     robot.stop()
 
 
-def drive_to_white_black_white(speed = 110):
+def drive_to_white_black_white_right_line_sensor(speed = 110):
     
     common.line_sensor.color() # switch to color mode
 
@@ -179,7 +179,31 @@ def drive_to_white_black_white(speed = 110):
     
 
 
-def drive_to_white(speed):
+def drive_to_white_black_white_left_color_sensor(speed = 110):
+    
+    common.color_sensor.color() # switch to color mode
+
+    # Begin driving forward
+    robot.drive(speed, 0)
+
+    # look for white 
+    wait_for_color(Color.WHITE)
+
+    robot.drive(speed, 0)
+
+    # look for black
+    wait_for_color(Color.BLACK)
+    #ev3.light.on(Color.GREEN)
+
+    # look for white
+    wait_for_color(Color.WHITE)
+    common.ev3.light.on(Color.RED)
+    robot.stop()
+    
+
+
+
+def drive_to_white_on_right_line_sensor(speed):
     
     common.line_sensor.color() # switch to color mode
 
@@ -190,6 +214,20 @@ def drive_to_white(speed):
     wait_for_color_on_right_line_sensor(Color.WHITE)
 
     robot.stop()
+
+
+def drive_to_white(speed):
+    
+    common.color_sensor.color() # switch to color mode
+
+    # Begin driving - could be forward or backward
+    robot.drive(speed, 0)
+
+    # look for white 
+    wait_for_color(Color.WHITE)
+
+    robot.stop()
+
 
 
 
@@ -203,10 +241,10 @@ def drive_to_second_and_turn():
     robot.reset()
 
     # first 
-    drive_to_white_black_white()
+    drive_to_white_black_white_right_line_sensor()
 
     # second one
-    drive_to_white_black_white()
+    drive_to_white_black_white_right_line_sensor()
 
 
     robot.turn(-90)

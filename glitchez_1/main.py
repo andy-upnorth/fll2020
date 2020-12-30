@@ -42,12 +42,14 @@ if common.CAN_DRIVE:
         #missions.turn_from_white_bar_to_arch()
         #mover.turn_north(-50)
 
-
         # do entire step counter - and the treadmill
         missions.do_step_counter()
 
         missions.do_treadmill_after_steps()
-        #missions.drive_long_way_after_treadmill()
+        missions.drive_to_north_line_after_treadmill()
+        missions.do_weights_from_north_line()
+
+        missions.drive_home_from_weights()
 
         # Do entire treadmill mission from start instead
         #missions.do_treadmill_from_start()
