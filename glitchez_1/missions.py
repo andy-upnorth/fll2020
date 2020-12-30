@@ -20,14 +20,14 @@ from pybricks.robotics import DriveBase
 def wiggle_step():
 
     
-    for x in range (13):
-        robot.straight(-20)
-        robot.turn(-0.6)
+    for x in range (17):
+        robot.straight(-16)
+        robot.turn(-0.68)
 
         # slow wiggle works better
         robot.stop()
-        robot.settings(straight_speed=55)
-        robot.straight(37)
+        robot.settings(straight_speed=95)
+        robot.straight(29)
     
         # faster again
         robot.stop()
