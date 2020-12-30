@@ -30,6 +30,21 @@ line_threshold = (BLACK + WHITE) / 2
 
 
 
+
+# copied from example
+#
+# Set the gain of the proportional line controller. This means that for every
+# percentage point of light deviating from the threshold, we set the turn
+# rate of the drivebase to 1.2 degrees per second.
+
+# For example, if the light value deviates from the threshold by 10, the robot
+# steers at 10*1.2 = 12 degrees per second.
+# PROPORTIONAL_GAIN = 3.0 # 1.2
+PROPORTIONAL_GAIN_NORMAL = 1.2
+PROPORTIONAL_GAIN_BIG_LEFT_TURN = 3.0
+
+
+
 # The DriveBase is composed of two motors, with a wheel on each motor.
 # The wheel_diameter and axle_track values are used to make the motors
 # move at the correct speed when you give a motor command.
@@ -48,12 +63,14 @@ robot.distance_control.limits(acceleration=500)
 
 
 # Adjust the line follow and keep going
-def check_n_turn():
+#   smooth turn is normal
+#   for big left turn use PROPORTIONAL_GAIN_BIG_LEFT_TURN
+def check_n_turn(turn_multiply = PROPORTIONAL_GAIN_NORMAL):
     # Calculate the deviation from the threshold.
     deviation = common.line_sensor.reflection() - line_threshold
     
     # Calculate the turn rate.
-    turn_rate = PROPORTIONAL_GAIN * deviation
+    turn_rate = turn_multiply * deviation
 
     # Set the drive base speed and turn rate.
     robot.drive(LINE_DRIVE_SPEED, turn_rate)
@@ -148,7 +165,7 @@ def drive_to_start():
     common.color_sensor.color() # switch to color mode
 
     # Begin driving forward
-    robot.drive(170, 0)
+    robot.drive(160, 0)
 
     # look for white 
     wait_until_not_color(Color.WHITE)
@@ -231,27 +248,6 @@ def drive_to_white(speed):
 
 
 
-def drive_to_second_and_turn():
-    common.ev3.light.on(Color.RED)
-    common.ev3.light.on(Color.GREEN)
-
-    drive_to_start()
-
-    # reset the distance counter
-    robot.reset()
-
-    # first 
-    drive_to_white_black_white_right_line_sensor()
-
-    # second one
-    drive_to_white_black_white_right_line_sensor()
-
-
-    robot.turn(-90)
-    robot.straight(200)
-    # now maybe follow line
-
-
 GYRO_NORTH = -84
 GYRO_WEST = -170
 
@@ -280,16 +276,8 @@ Line following
 --------------------
 '''
 
-# Set the gain of the proportional line controller. This means that for every
-# percentage point of light deviating from the threshold, we set the turn
-# rate of the drivebase to 1.2 degrees per second.
-
-# For example, if the light value deviates from the threshold by 10, the robot
-# steers at 10*1.2 = 12 degrees per second.
-# PROPORTIONAL_GAIN = 3.0 # 1.2
-PROPORTIONAL_GAIN = 1.2
-
-
+# line following copied from example
+#
 def follow_until_treadmill():
     common.treadmill_motor.set_dc_settings(30, 0)
     common.treadmill_motor.run(-300)
@@ -324,11 +312,11 @@ def follow_distance(how_far):
 
 # This function will return after the color sensor sees
 # the_color for at least COLOR_WAIT_MINIMUM milliseconds
-def follow_until_color(the_color):
+def follow_until_color(the_color, turn_multiply):
     while True:
         common.ev3.light.on(Color.YELLOW)
 
-        check_n_turn()
+        check_n_turn(turn_multiply)
 
         if common.color_sensor.color() != the_color:
             continue # this jumps back to the start of the loop
@@ -341,7 +329,7 @@ def follow_until_color(the_color):
             if wait_sensor_timer.time() > COLOR_WAIT_MINIMUM: # enough time already
                 return
             common.ev3.light.on(Color.RED)
-            check_n_turn()
+            check_n_turn(turn_multiply)
             continue
         
         # Fell out of the loop because the color changed.
@@ -352,7 +340,7 @@ def follow_until_color(the_color):
         # otherwise go through the loop again
 
 
-def follow_someting(how_many):
+def follow_someting(how_many, turn_multiply = PROPORTIONAL_GAIN_NORMAL):
    
     common.line_sensor.reflection() # for line following
     common.color_sensor.color() # switch to color mode
@@ -361,9 +349,9 @@ def follow_someting(how_many):
     robot.drive(130, 0)
 
     for x in range (how_many):
-        follow_until_color(Color.WHITE)
-        follow_until_color(Color.BLACK)
-        follow_until_color(Color.WHITE)
+        follow_until_color(Color.WHITE, turn_multiply)
+        follow_until_color(Color.BLACK, turn_multiply)
+        follow_until_color(Color.WHITE, turn_multiply)
 
     robot.stop()
 

@@ -57,7 +57,7 @@ try:
 
 except OSError:
     print("No treadmill arm attached.  Disabled WHEEL_ARM.")
-    ev3.speaker.say("No tread mill arm")
+    #ev3.speaker.say("No arm")
 
 
 

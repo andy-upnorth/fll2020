@@ -57,7 +57,8 @@ if common.CAN_DRIVE:
         mover.drive_to_start()
         # need to add a line finder
         
-        mover.follow_someting(3)
+        mover.follow_someting(1, turn_multiply = mover.PROPORTIONAL_GAIN_BIG_LEFT_TURN)
+        mover.follow_someting(2)
         missions.do_boccia()
         missions.do_lift_basket()
         missions.do_smash_bench()
