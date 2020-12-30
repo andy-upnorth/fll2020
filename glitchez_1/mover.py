@@ -247,30 +247,6 @@ def drive_to_white(speed):
 
 
 
-
-GYRO_NORTH = -84
-GYRO_WEST = -170
-
-def turn_north(turn_rate):
-    robot.stop()
-    robot.drive(0, turn_rate)
-    while(common.gyro.angle() > GYRO_NORTH):
-        continue
-
-    robot.stop()
-    current_angle = common.gyro.angle()
-    print("Angle is ." + str(current_angle))
-
-def turn_west(turn_rate):
-    robot.stop()
-    robot.drive(0, turn_rate)
-    while(common.gyro.angle() > GYRO_WEST):
-        continue
-
-    robot.stop()
-    current_angle = common.gyro.angle()
-    print("Angle is ." + str(current_angle))
-
 '''
 Line following
 --------------------
@@ -312,7 +288,7 @@ def follow_distance(how_far):
 
 # This function will return after the color sensor sees
 # the_color for at least COLOR_WAIT_MINIMUM milliseconds
-def follow_until_color(the_color, turn_multiply):
+def follow_until_color(the_color, turn_multiply = PROPORTIONAL_GAIN_NORMAL):
     while True:
         common.ev3.light.on(Color.YELLOW)
 
@@ -354,5 +330,29 @@ def follow_someting(how_many, turn_multiply = PROPORTIONAL_GAIN_NORMAL):
         follow_until_color(Color.WHITE, turn_multiply)
 
     robot.stop()
+
+
+
+
+
+def drive_to_start_with_follow():
+    
+    common.line_sensor.color() # switch to color mode
+    common.color_sensor.color() # switch to color mode
+
+    # Begin driving forward
+    robot.drive(80, 0)
+
+    wait_for_color_on_right_line_sensor(Color.BLACK)
+
+    common.line_sensor.reflection() # for line following
+
+    # if this doesn't work then make: follow_until_not_color(Color.WHITE)
+    follow_until_color(Color.GREEN)
+    #wait_until_not_color(Color.WHITE)
+
+    robot.stop()
+
+
 
 

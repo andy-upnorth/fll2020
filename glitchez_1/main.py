@@ -54,11 +54,15 @@ if common.CAN_DRIVE:
         #missions.do_treadmill_from_start()
     else:
 
-        mover.drive_to_start()
-        # need to add a line finder
+        #mover.drive_to_start()  # just drive until not white
+        mover.drive_to_start_with_follow()   # try to follow black line
         
+        # follow line around corner
         mover.follow_someting(1, turn_multiply = mover.PROPORTIONAL_GAIN_BIG_LEFT_TURN)
+
+        # follow two more white-black-white
         mover.follow_someting(2)
+        
         missions.do_boccia()
         missions.do_lift_basket()
         missions.do_smash_bench()
