@@ -47,7 +47,7 @@ if common.CAN_DRIVE:
         missions.do_step_counter()
 
         missions.do_treadmill_after_steps()
-        missions.drive_long_way_after_treadmill()
+        #missions.drive_long_way_after_treadmill()
 
         # Do entire treadmill mission from start instead
         #missions.do_treadmill_from_start()

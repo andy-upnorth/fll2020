@@ -71,7 +71,7 @@ wait_sensor_timer = StopWatch()
 
 # This function will return after the color sensor sees
 # the_color for at least COLOR_WAIT_MINIMUM milliseconds
-def wait_for_color(the_color):
+def wait_for_color_on_right_line_sensor(the_color):
     while True:
         common.ev3.light.on(Color.YELLOW)
         if common.line_sensor.color() != the_color:
@@ -93,6 +93,33 @@ def wait_for_color(the_color):
             return
     
         # otherwise go through the loop again
+
+
+# This function will return after the color sensor sees
+# the_color for at least COLOR_WAIT_MINIMUM milliseconds
+def wait_for_color(the_color):
+    while True:
+        common.ev3.light.on(Color.YELLOW)
+        if common.color_sensor.color() != the_color:
+            continue # this jumps back to the start of the loop
+
+        # Sensor found a glimmer of the_color, so now
+        # start a timer and make sure that the same color is
+        # visibile for a while
+        wait_sensor_timer.reset()
+        while common.color_sensor.color() == the_color:
+            if wait_sensor_timer.time() > COLOR_WAIT_MINIMUM: # enough time already
+                return
+            common.ev3.light.on(Color.RED)
+            continue
+        
+        # Fell out of the loop because the color changed.
+        # But maybe it was big enough anyway
+        if wait_sensor_timer.time() > COLOR_WAIT_MINIMUM/2: # This is long enough
+            return
+    
+        # otherwise go through the loop again
+
 
 
 # This function will return after the color sensor has NOT seen
@@ -137,16 +164,16 @@ def drive_to_white_black_white(speed = 110):
     robot.drive(speed, 0)
 
     # look for white 
-    wait_for_color(Color.WHITE)
+    wait_for_color_on_right_line_sensor(Color.WHITE)
 
     robot.drive(speed, 0)
 
     # look for black
-    wait_for_color(Color.BLACK)
+    wait_for_color_on_right_line_sensor(Color.BLACK)
     #ev3.light.on(Color.GREEN)
 
     # look for white
-    wait_for_color(Color.WHITE)
+    wait_for_color_on_right_line_sensor(Color.WHITE)
     common.ev3.light.on(Color.RED)
     robot.stop()
     
@@ -160,7 +187,7 @@ def drive_to_white(speed):
     robot.drive(speed, 0)
 
     # look for white 
-    wait_for_color(Color.WHITE)
+    wait_for_color_on_right_line_sensor(Color.WHITE)
 
     robot.stop()
 
@@ -221,7 +248,8 @@ Line following
 
 # For example, if the light value deviates from the threshold by 10, the robot
 # steers at 10*1.2 = 12 degrees per second.
-PROPORTIONAL_GAIN = 3.0 # 1.2
+# PROPORTIONAL_GAIN = 3.0 # 1.2
+PROPORTIONAL_GAIN = 1.2
 
 
 def follow_until_treadmill():
@@ -231,32 +259,22 @@ def follow_until_treadmill():
 
     # Follow line until arm motor stalls.
     while (common.treadmill_motor.stalled() == False):
-        # Calculate the deviation from the threshold.
-        deviation = common.line_sensor.reflection() - line_threshold
-        
-        # Calculate the turn rate.
-        turn_rate = PROPORTIONAL_GAIN * deviation
-
-        # Set the drive base speed and turn rate.
-        robot.drive(LINE_DRIVE_SPEED, turn_rate)
+        check_n_turn()
 
         # You can wait for a short time or do other things in this loop.
         wait(10)
 
 
 def follow_distance(how_far):
+    # reset distance to 0
     robot.reset()
+
+    # ready for line follow
+    common.line_sensor.reflection()
 
     # Follow line ...............
     while (robot.distance() < how_far):
-        # Calculate the deviation from the threshold.
-        deviation = common.line_sensor.reflection() - line_threshold
-        
-        # Calculate the turn rate.
-        turn_rate = PROPORTIONAL_GAIN * deviation
-
-        # Set the drive base speed and turn rate.
-        robot.drive(LINE_DRIVE_SPEED, turn_rate)
+        check_n_turn()
 
         # You can wait for a short time or do other things in this loop.
         wait(10)

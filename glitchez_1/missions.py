@@ -56,7 +56,7 @@ def turn_from_white_bar_to_arch():
     #robot.drive(100, -60)
 
     robot.drive(80, 0)
-    mover.wait_for_color(Color.BLACK)
+    mover.wait_for_color_on_right_line_sensor(Color.BLACK)
     robot.straight(40)
     robot.turn(20)
     robot.stop()
@@ -104,9 +104,12 @@ def climb_and_spin_treadmill():
     common.left_motor.run_angle(CLIMB_SPEED, -4 * CLIMB_ANGLE, Stop.COAST, False)
     common.right_motor.run_angle(CLIMB_SPEED, -4 * CLIMB_ANGLE, Stop.COAST, False)
 
-    for i in range(3):
-        ev3.speaker.beep(duration=500)
-        wait(450)
+    # Use left sensor to find line
+    mover.wait_for_color(Color.WHITE)
+    mover.wait_for_color(Color.BLACK)
+    mover.wait_for_color(Color.WHITE)
+    robot.stop()
+
 
 
 def do_treadmill_from_start():
