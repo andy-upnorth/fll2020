@@ -194,16 +194,19 @@ def drive_home_from_weights():
     robot.turn(-135)
     mover.drive_to_white_black_white_right_line_sensor()
 
+    # go near tires
     robot.turn(-20)
-    robot.straight(100)
+    robot.straight(110)
 
-    # attempt to drive home.  but it is not perfect
-    robot.turn(40)
+    # drive home.  it is not perfect but it usually works
+    robot.turn(36)
     mover.drive_to_white_black_white_right_line_sensor(speed = 160)
-    mover.drive_to_white_black_white_right_line_sensor(speed = 180)
-    mover.drive_to_white_black_white_right_line_sensor(speed = 180)
-    robot.turn(-40)
-    robot.straight(900)
+    mover.drive_to_white_black_white_right_line_sensor(speed = 200)
+    mover.drive_to_white_black_white_right_line_sensor(speed = 200)
+    robot.turn(-75)
+    robot.straight(450)
+    robot.turn(60)
+    robot.straight(600)
 
 
 

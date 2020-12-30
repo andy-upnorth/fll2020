@@ -40,9 +40,8 @@ if common.CAN_DRIVE:
         # Quick testing
         #missions.wiggle_step()
         #missions.turn_from_white_bar_to_arch()
-        #mover.turn_north(-50)
 
-        # do entire step counter - and the treadmill
+        # Do the missions
         missions.do_step_counter()
 
         missions.do_treadmill_after_steps()
