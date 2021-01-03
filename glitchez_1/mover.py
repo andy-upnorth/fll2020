@@ -65,7 +65,7 @@ robot.distance_control.limits(acceleration=500)
 # Adjust the line follow and keep going
 #   smooth turn is normal
 #   for big left turn use PROPORTIONAL_GAIN_BIG_LEFT_TURN
-def check_n_turn(turn_multiply = PROPORTIONAL_GAIN_NORMAL):
+def check_n_turn(turn_multiply = PROPORTIONAL_GAIN_NORMAL, drive_speed = LINE_DRIVE_SPEED):
     # Calculate the deviation from the threshold.
     deviation = common.line_sensor.reflection() - line_threshold
     
@@ -73,8 +73,21 @@ def check_n_turn(turn_multiply = PROPORTIONAL_GAIN_NORMAL):
     turn_rate = turn_multiply * deviation
 
     # Set the drive base speed and turn rate.
-    robot.drive(LINE_DRIVE_SPEED, turn_rate)
+    robot.drive(drive_speed, turn_rate)
 
+# Adjust the line follow and keep going
+#   smooth turn is normal
+#   for big left turn use PROPORTIONAL_GAIN_BIG_LEFT_TURN
+def check_n_turn_left_sensor(turn_multiply = PROPORTIONAL_GAIN_NORMAL, drive_speed = LINE_DRIVE_SPEED):
+    # Calculate the deviation from the threshold.
+    #deviation = 65 - common.color_sensor.reflection()
+    deviation = 45 - common.color_sensor.reflection()
+    
+    # Calculate the turn rate.
+    turn_rate = turn_multiply * deviation
+
+    # Set the drive base speed and turn rate.
+    robot.drive(drive_speed, turn_rate)
 
 
 
@@ -246,6 +259,43 @@ def drive_to_white(speed):
     robot.stop()
 
 
+def drive_to_green(speed):
+
+    common.color_sensor.color() # switch to color mode
+
+    # Begin driving - could be forward or backward
+    robot.drive(speed, 0)
+
+    # look for white
+    wait_for_color(Color.GREEN)
+
+    robot.stop()
+
+
+def drive_to_line(speed = LINE_DRIVE_SPEED):
+
+    # switch to reflection mode
+    common.line_sensor.reflection()
+
+    # drive straight ahead until it gets dark
+    while common.line_sensor.reflection() > line_threshold:
+        robot.drive(speed=speed, turn_rate=0)
+
+    robot.stop()
+
+
+
+def turn_ccw_until_right_sensor_white():
+
+    common.color_sensor.color() # switch to color mode
+
+    robot.drive(speed=-20, turn_rate=-40)
+
+    # look for white
+    wait_for_color(Color.WHITE)
+
+    robot.stop()
+
 
 '''
 Line following
@@ -267,7 +317,7 @@ def follow_until_treadmill():
         wait(10)
 
 
-def follow_distance(how_far):
+def follow_distance(how_far, drive_speed = LINE_DRIVE_SPEED):
     # reset distance to 0
     robot.reset()
 
@@ -276,23 +326,38 @@ def follow_distance(how_far):
 
     # Follow line ...............
     while (robot.distance() < how_far):
-        check_n_turn()
+        check_n_turn(drive_speed=drive_speed)
 
         # You can wait for a short time or do other things in this loop.
         wait(10)
 
+    robot.stop()
 
 
+def follow_distance_left_sensor(how_far, drive_speed = LINE_DRIVE_SPEED):
+    # reset distance to 0
+    robot.reset()
 
+    # ready for line follow
+    common.color_sensor.reflection()
+
+    # Follow line ...............
+    while (robot.distance() < how_far):
+        check_n_turn_left_sensor(drive_speed=drive_speed)
+
+        # You can wait for a short time or do other things in this loop.
+        wait(10)
+
+    robot.stop()
 
 
 # This function will return after the color sensor sees
 # the_color for at least COLOR_WAIT_MINIMUM milliseconds
-def follow_until_color(the_color, turn_multiply = PROPORTIONAL_GAIN_NORMAL):
+def follow_until_color(the_color, turn_multiply = PROPORTIONAL_GAIN_NORMAL, drive_speed = LINE_DRIVE_SPEED):
     while True:
         common.ev3.light.on(Color.YELLOW)
 
-        check_n_turn(turn_multiply)
+        check_n_turn(turn_multiply, drive_speed)
 
         if common.color_sensor.color() != the_color:
             continue # this jumps back to the start of the loop
@@ -305,7 +370,7 @@ def follow_until_color(the_color, turn_multiply = PROPORTIONAL_GAIN_NORMAL):
             if wait_sensor_timer.time() > COLOR_WAIT_MINIMUM: # enough time already
                 return
             common.ev3.light.on(Color.RED)
-            check_n_turn(turn_multiply)
+            check_n_turn(turn_multiply, drive_speed)
             continue
         
         # Fell out of the loop because the color changed.
@@ -325,14 +390,22 @@ def follow_someting(how_many, turn_multiply = PROPORTIONAL_GAIN_NORMAL):
     robot.drive(130, 0)
 
     for x in range (how_many):
-        follow_until_color(Color.WHITE, turn_multiply)
-        follow_until_color(Color.BLACK, turn_multiply)
-        follow_until_color(Color.WHITE, turn_multiply)
+        follow_until_color(Color.WHITE, turn_multiply=turn_multiply)
+        follow_until_color(Color.BLACK, turn_multiply=turn_multiply)
+        follow_until_color(Color.WHITE, turn_multiply=turn_multiply)
 
     robot.stop()
 
 
+def follow_on_right_until_white_black_white_on_left():
 
+    common.line_sensor.reflection()
+
+    follow_until_color(Color.GREEN, drive_speed=100)
+    follow_until_color(Color.WHITE, drive_speed=180)
+    follow_until_color(Color.BLACK, drive_speed=180)
+
+    robot.stop()
 
 
 def drive_to_start_with_follow():
@@ -354,5 +427,5 @@ def drive_to_start_with_follow():
     robot.stop()
 
 
-
-
+def play_minecraft():
+    ev3.speaker.say("Yay 5 Mil coins")

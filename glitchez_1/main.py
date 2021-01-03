@@ -9,6 +9,25 @@ Download: https://education.lego.com/en-us/support/mindstorms-ev3/python-for-ev3
 
 Building instructions can be found at:
 https://education.lego.com/en-us/support/mindstorms-ev3/building-instructions#robot
+
+TODO:
+* Consider adding an initial series of beeps to indicate mission (1 beep for mission 1, etc...)
+* Several more seconds can be trimmed by increasing speeds in untuned sections.
+* Remaining unreliable portions:
+  * When exiting the step counter it will sometimes get confused after refinding the line
+    on its way to the treadmill. We're doing a 3 point turn to drop the robot right on the line
+    but it still happens. I suspect it's because we're setting the stall limit on the treadmill
+    motor to a hair trigger, which is actually triggering a stall when we start spinning it.
+    This problem appears to happen most during low battery charge. We tried changing it
+  * The weight machine worked perfectly for a while during the middle of our sessions but we
+    didn't do anything to change the logic. We only saw it working when the weight machine was
+    set to "yellow". It was close enough I think it could be made pretty reliable.
+  * Pullup mission (#3) sometimes executes when trying to run basketball mission (#2) because
+    the gyro is detected as being unplugged even when it's plugged in. Replugging helps.
+  * The final left turn in mission 3 toward the pullup bar sometimes drops the line. It only
+    seems to happen when the battery is low, and might benefit from a slightly bigger "back
+    up to find the line" step. (comment "back up and make final left turn to find new line")
+
 """
 
 from pybricks.hubs import EV3Brick
@@ -37,13 +56,12 @@ common.ev3.light.on(Color.RED)
 if common.CAN_DRIVE:
    
     if common.HAVE_WHEEL_ARM:
-        # Quick testing
-        #missions.wiggle_step()
-        #missions.turn_from_white_bar_to_arch()
+        #
+        # Run steps/treadmill/weight missions
+        #
 
         # Do the missions
         missions.do_step_counter()
-
         missions.do_treadmill_after_steps()
         missions.drive_to_north_line_after_treadmill()
         missions.do_weights_from_north_line()
@@ -52,7 +70,11 @@ if common.CAN_DRIVE:
 
         # Do entire treadmill mission from start instead
         #missions.do_treadmill_from_start()
-    else:
+
+    elif common.HAVE_GYRO:
+        #
+        # Run boccia/basket/bench missions
+        #
 
         #mover.drive_to_start()  # just drive until not white
         mover.drive_to_start_with_follow()   # try to follow black line
@@ -67,13 +89,17 @@ if common.CAN_DRIVE:
         missions.do_lift_basket()
         missions.do_smash_bench()
 
-    #else:
-        # Do other missions that do not need the treadmill arm
-    #    missions.do_pullup()
+    else:
+        #
+        # Run pullup bar missions
+        #
 
+        # drive to the pullup bar and go through and back out
+        missions.drive_under_pullup_bar()
+
+        # finish the mission by doing a pullup
+        missions.do_pullup()
 
 else:
     # do somthing with the arm
-    #arm.wag_arm()
     common.ev3.speaker.say(" i like minecraft i want to play it now")
-
