@@ -18,8 +18,11 @@ ev3 = EV3Brick()
 # obstacles as the robot drives around.
 #obstacle_sensor = UltrasonicSensor(Port.S2)
 
-# Initialize the color sensor.
+# Initialize the color sensor for lines
 line_sensor = ColorSensor(Port.S4)
+
+# Initialize the color sensor for other stuff
+color_sensor = ColorSensor(Port.S1)
 
 gyro = GyroSensor(Port.S2, Direction.CLOCKWISE)
 
@@ -54,7 +57,7 @@ try:
 
 except OSError:
     print("No treadmill arm attached.  Disabled WHEEL_ARM.")
-    ev3.speaker.say("No tread mill arm")
+    #ev3.speaker.say("No arm")
 
 
 

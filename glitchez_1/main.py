@@ -36,21 +36,36 @@ common.ev3.light.on(Color.RED)
 
 if common.CAN_DRIVE:
    
-   if common.HAVE_WHEEL_ARM:
+    if common.HAVE_WHEEL_ARM:
         # Quick testing
         #missions.wiggle_step()
         #missions.turn_from_white_bar_to_arch()
-        #mover.turn_north(-50)
 
-
-        # do entire step counter - and the treadmill
+        # Do the missions
         missions.do_step_counter()
 
         missions.do_treadmill_after_steps()
-        missions.drive_long_way_after_treadmill()
+        missions.drive_to_north_line_after_treadmill()
+        missions.do_weights_from_north_line()
+
+        missions.drive_home_from_weights()
 
         # Do entire treadmill mission from start instead
         #missions.do_treadmill_from_start()
+    else:
+
+        #mover.drive_to_start()  # just drive until not white
+        mover.drive_to_start_with_follow()   # try to follow black line
+        
+        # follow line around corner
+        mover.follow_someting(1, turn_multiply = mover.PROPORTIONAL_GAIN_BIG_LEFT_TURN)
+
+        # follow two more white-black-white
+        mover.follow_someting(2)
+        
+        missions.do_boccia()
+        missions.do_lift_basket()
+        missions.do_smash_bench()
 
     #else:
         # Do other missions that do not need the treadmill arm
