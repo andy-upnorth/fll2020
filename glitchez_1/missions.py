@@ -165,7 +165,7 @@ def drive_to_north_line_after_treadmill():
     robot.stop()
 
     # forward some 
-    robot.straight(190)
+    robot.straight(300)
 
     mover.drive_to_white_black_white_left_color_sensor(130)
     #mover.drive_to_white_on_right_line_sensor(80)
