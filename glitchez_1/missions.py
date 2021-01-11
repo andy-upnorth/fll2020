@@ -20,7 +20,7 @@ from pybricks.robotics import DriveBase
 def wiggle_step():
 
     
-    for x in range (17):
+    for x in range (9):
         robot.straight(-16)
         robot.turn(-0.68)
 
@@ -35,15 +35,12 @@ def wiggle_step():
 
 
     # back up until we get to white bar
-    robot.straight(-100)
     mover.drive_to_white_on_right_line_sensor(-100)
+    robot.straight(-80) # a little more to clear the step machine
 
 
 
 def turn_from_white_bar_to_arch():
-
-    # this starts already on white.  move ahead
-    robot.straight(20) 
 
     robot.turn(-20)
     robot.straight(110)
@@ -55,16 +52,23 @@ def turn_from_white_bar_to_arch():
     robot.reset()
     #robot.drive(100, -60)
 
-    robot.drive(80, 0)
+    robot.drive(40, 0)
     mover.wait_for_color_on_right_line_sensor(Color.BLACK)
-    robot.straight(40)
-    robot.turn(20)
+
+    # park it on the line pointing in the right direction
+    robot.straight(50)
+    robot.turn(10)
+    robot.straight(30)
+    robot.turn(10)
+    robot.straight(30)
+    robot.turn(15)
+
     robot.stop()
 
 
 def do_step_counter():
 
-    mover.drive_to_start()
+    mover.drive_to_green(120)
 
     mover.drive_to_white_black_white_left_color_sensor()
 
@@ -89,9 +93,9 @@ def climb_and_spin_treadmill():
     # Climb onto treadmill using all 3 wheels.
     CLIMB_SPEED=100
     CLIMB_ANGLE=120
-    common.treadmill_motor.run_angle(CLIMB_SPEED, CLIMB_SPEED, Stop.COAST, False)
-    common.left_motor.run_angle(CLIMB_SPEED, CLIMB_SPEED, Stop.COAST, False)
-    common.right_motor.run_angle(CLIMB_SPEED, CLIMB_SPEED, Stop.COAST, True)
+    common.treadmill_motor.run_angle(CLIMB_SPEED, CLIMB_ANGLE, Stop.COAST, False)
+    common.left_motor.run_angle(CLIMB_SPEED, CLIMB_ANGLE, Stop.COAST, False)
+    common.right_motor.run_angle(CLIMB_SPEED, CLIMB_ANGLE, Stop.COAST, True)
     ev3.speaker.beep()
 
     # Spin the treadmill by a specified angle.
@@ -122,6 +126,7 @@ def do_treadmill_from_start():
     mover.follow_until_treadmill()
 
     climb_and_spin_treadmill()
+
 
 def do_treadmill_after_steps():
 
@@ -187,27 +192,25 @@ def do_weights_from_north_line():
 
     # smash and back up
     common.arm.run_until_stalled(-200)
-    robot.straight(-100)
+    robot.straight(-120)
 
 
 def drive_home_from_weights():
-    robot.turn(-135)
-    mover.drive_to_white_black_white_right_line_sensor()
 
-    # go near tires
-    robot.turn(-20)
-    robot.straight(110)
+    robot.turn(-45)
+    mover.turn_ccw_until_right_sensor_white()
+    ev3.speaker.beep()
+    robot.turn(-30)
+    ev3.speaker.beep()
 
-    # drive home.  it is not perfect but it usually works
-    robot.turn(36)
-    mover.drive_to_white_black_white_right_line_sensor(speed = 160)
-    mover.drive_to_white_black_white_right_line_sensor(speed = 200)
-    mover.drive_to_white_black_white_right_line_sensor(speed = 200)
-    robot.turn(-75)
-    robot.straight(450)
-    robot.turn(60)
-    robot.straight(600)
+    mover.follow_distance_left_sensor(400)
+    ev3.speaker.beep()
 
+    robot.straight(500)
+    robot.turn(-45)
+    robot.straight(400)
+    robot.turn(45)
+    robot.straight(700)
 
 
 
@@ -215,18 +218,39 @@ def drive_home_from_weights():
 Pull up
 '''
 
+def drive_under_pullup_bar():
+
+    # drive forward until the robot finds a line
+    mover.drive_to_line()
+    ev3.speaker.beep()
+
+    mover.follow_on_right_until_white_black_white_on_left()
+    ev3.speaker.beep()
+
+    # back up and make final left turn to find new line
+    robot.straight(-20)
+    robot.turn(-80)
+    ev3.speaker.beep()
+
+    mover.drive_to_line()
+    ev3.speaker.beep()
+
+    # Drive under pullup bar and back again
+    mover.follow_distance(200, 120)
+    robot.straight(320)
+    robot.straight(-450)
+
+
 def do_pullup():
 
-    # todo: drive here and line up
+    # lift arm up to get ready
+    common.arm.run_angle(500, 250, Stop.BRAKE)
 
-    # todo: get arm back and ready
+    # drive up close to pullup bar
+    robot.straight(320)
 
-    # Pull up
+    # do the pull up
     common.arm.run_angle(-500, 250, Stop.BRAKE)
-
-    ev3.beep()
-
-    # todo: wait a long time.
 
 
 

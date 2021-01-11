@@ -24,16 +24,13 @@ line_sensor = ColorSensor(Port.S4)
 # Initialize the color sensor for other stuff
 color_sensor = ColorSensor(Port.S1)
 
-gyro = GyroSensor(Port.S2, Direction.CLOCKWISE)
-
 # 
 arm = Motor(Port.A, Direction.CLOCKWISE)
 
 CAN_DRIVE = False
 HAVE_WHEEL_ARM = False
+HAVE_GYRO = False
 
-
-gyro.reset_angle(0)
 
 # Initialize two motors with default settings on Port B and Port C.
 # These will be the left and right motors of the drive base.
@@ -59,9 +56,15 @@ except OSError:
     print("No treadmill arm attached.  Disabled WHEEL_ARM.")
     #ev3.speaker.say("No arm")
 
+# Initialize the gyroscope and mark it as available
+try:
+    gyro = GyroSensor(Port.S2, Direction.CLOCKWISE)
+    gyro.reset_angle(0)
 
+    HAVE_GYRO = True
 
-
+except OSError:
+    print("No gyroscope attached.  Disabled GYRO.")
 
 def beeper():
     ev3.speaker.play_notes(['C4/4', 'C4/4', 'G4/4', 'G4/4'])
