@@ -20,7 +20,7 @@ COLOR_WAIT_MINIMUM = 160
 ROBOT_STRAIGHT_SPEED = 250
 
 # Set the drive speed at 100 millimeters per second.
-LINE_DRIVE_SPEED = 90
+LINE_DRIVE_SPEED = 120
 
 
 # Calculate the light threshold. Choose values based on your measurements.
@@ -308,6 +308,7 @@ def follow_until_treadmill():
     common.treadmill_motor.set_dc_settings(30, 0)
     common.treadmill_motor.run(-300)
     common.line_sensor.reflection()
+    wait(10)
 
     # Follow line until arm motor stalls.
     while (common.treadmill_motor.stalled() == False):
@@ -315,6 +316,22 @@ def follow_until_treadmill():
 
         # You can wait for a short time or do other things in this loop.
         wait(10)
+
+
+
+# line following copied from example
+#
+def wait_until_treadmill_stall():
+    common.treadmill_motor.set_dc_settings(30, 0)
+    common.treadmill_motor.run(-300)
+    common.line_sensor.reflection()
+    wait(10)
+
+    # Follow line until arm motor stalls.
+    while (common.treadmill_motor.stalled() == False):
+        # You can wait for a short time or do other things in this loop.
+        wait(10)
+
 
 
 def follow_distance(how_far, drive_speed = LINE_DRIVE_SPEED):

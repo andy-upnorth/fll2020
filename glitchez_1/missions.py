@@ -45,30 +45,27 @@ def turn_from_white_bar_to_arch():
     robot.turn(-20)
     robot.straight(110)
     robot.turn(-20)
-    #robot.straight(50)
-    robot.straight(120)
+    robot.straight(40)
 
-    #robot.drive(140, -65)
-    robot.reset()
-    #robot.drive(100, -60)
-
-    robot.drive(40, 0)
+    # turn more and drive to line
+    robot.turn(-7)
+    robot.drive(90, 0)
+    #mover.wait_for_color(Color.BLACK)
+    mover.wait_for_color(Color.WHITE)
+    mover.wait_until_not_color(Color.WHITE)
     mover.wait_for_color_on_right_line_sensor(Color.BLACK)
+    mover.wait_for_color_on_right_line_sensor(Color.WHITE)
 
-    # park it on the line pointing in the right direction
-    robot.straight(50)
-    robot.turn(10)
-    robot.straight(30)
-    robot.turn(10)
-    robot.straight(30)
+    robot.stop()
+
+    # ready to follow line
     robot.turn(15)
-
     robot.stop()
 
 
 def do_step_counter():
 
-    mover.drive_to_green(120)
+    mover.drive_to_green(140)
 
     mover.drive_to_white_black_white_left_color_sensor()
 
@@ -168,7 +165,7 @@ def drive_to_north_line_after_treadmill():
     robot.stop()
 
     # forward some 
-    robot.straight(140)
+    robot.straight(190)
 
     mover.drive_to_white_black_white_left_color_sensor(130)
     #mover.drive_to_white_on_right_line_sensor(80)
@@ -208,9 +205,20 @@ def drive_home_from_weights():
 
     robot.straight(500)
     robot.turn(-45)
-    robot.straight(400)
-    robot.turn(45)
-    robot.straight(700)
+
+    # drive super fast, turning a little right
+    robot.reset()
+    robot.drive(1000, 5)
+    mover.wait_until_treadmill_stall()
+    #while (robot.distance() < 1900):
+        # You can wait for a short time or do other things in this loop.
+    #    wait(10)
+
+    robot.stop()
+
+    #robot.straight(1000)
+    #robot.turn(15)
+    #robot.straight(400)
 
 
 
