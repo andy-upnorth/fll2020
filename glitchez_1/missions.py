@@ -199,6 +199,8 @@ def do_weights_from_north_line():
 def drive_home_from_weights():
 
     robot.turn(-45)
+    robot.straight(-45)
+    robot.turn(-90)
     mover.turn_ccw_until_right_sensor_white()
     ev3.speaker.beep()
     robot.turn(-30)

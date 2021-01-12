@@ -316,6 +316,7 @@ Line following
 # line following copied from example
 #
 def follow_until_treadmill():
+    common.treadmill_motor.stop()
     common.treadmill_motor.set_dc_settings(30, 0)
     common.treadmill_motor.run(-300)
     common.line_sensor.reflection()
@@ -342,6 +343,8 @@ def wait_until_treadmill_stall():
     while (common.treadmill_motor.stalled() == False):
         # You can wait for a short time or do other things in this loop.
         wait(10)
+
+    common.treadmill_motor.stop()
 
 
 
