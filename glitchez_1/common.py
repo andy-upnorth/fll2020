@@ -67,5 +67,9 @@ except OSError:
     print("No gyroscope attached.  Disabled GYRO.")
 
 def beeper():
-    ev3.speaker.play_notes(['C4/4', 'C4/4', 'G4/4', 'G4/4'])
+    ev3.speaker.play_notes(['C4/8', 'G4/16', 'G4/16'])
+
+
+def play_hello():
+    ev3.speaker.play_notes(['C4/32', 'D4/32', 'E4/32', 'F4/32', 'G4/32','A4/32', 'B4/32'])
 

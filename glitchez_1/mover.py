@@ -19,6 +19,10 @@ COLOR_WAIT_MINIMUM = 160
 # This sort of fast, so we might change if it is hard to steer.
 ROBOT_STRAIGHT_SPEED = 250
 
+# Set same every time - not too fast
+ROBOT_TURN_RATE = 80
+
+
 # Set the drive speed at 100 millimeters per second.
 LINE_DRIVE_SPEED = 120
 
@@ -52,14 +56,20 @@ PROPORTIONAL_GAIN_BIG_LEFT_TURN = 3.0
 # touch the ground.
 robot = DriveBase(common.left_motor, common.right_motor, wheel_diameter=55.5, axle_track=165)
 
-# This is fast, so we might lower the max later.
 
-robot.settings(straight_speed=ROBOT_STRAIGHT_SPEED)
+def set_defaults():
+    # This is fast, so we might lower the max later.
+    robot.stop()
+
+    robot.settings(straight_speed=ROBOT_STRAIGHT_SPEED, turn_rate=ROBOT_TURN_RATE)
+
+    # We tried a few acceleration values.  2 is crazy slow...  
+    #   400 seems to work.  the original made the robot jump when starting
+    robot.distance_control.limits(acceleration=500)
 
 
-# We tried a few acceleration values.  2 is crazy slow...  
-#   400 seems to work.  the original made the robot jump when starting
-robot.distance_control.limits(acceleration=500)
+# ok set them
+set_defaults()
 
 
 # Adjust the line follow and keep going

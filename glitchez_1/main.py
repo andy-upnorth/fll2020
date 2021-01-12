@@ -97,17 +97,69 @@ def do_part_3():
 
 
 
-if common.CAN_DRIVE:
-   
-    if common.HAVE_WHEEL_ARM:
-      do_part_1()       
 
-    elif common.HAVE_GYRO:
+
+'''
+jump to any part from menu
+'''
+
+
+def do_menu():
+
+  common.play_hello()
+  common.ev3.speaker.set_volume(25)
+
+  while True:
+    if Button.UP in common.ev3.buttons.pressed():
+      common.ev3.speaker.play_notes(['A4/4'])
+      arm.to_low_start()
+      do_part_1()
+      common.ev3.speaker.say("ready")
+
+    if Button.LEFT in common.ev3.buttons.pressed():
+      common.ev3.speaker.play_notes(['A4/8', 'A4/8'])
+      arm.to_low_start()
+      mover.set_defaults()
       do_part_2()
+      common.ev3.speaker.say("ready")
 
-    else:
-      do_part_3()     
+    if Button.RIGHT in common.ev3.buttons.pressed():
+      common.ev3.speaker.play_notes(['A4/16', 'A4/16', 'A4/16'])
+      arm.to_low_start()
+      mover.set_defaults()
+      do_part_3()
+      common.ev3.speaker.say("ready")
 
+    if Button.CENTER in common.ev3.buttons.pressed():
+      common.ev3.speaker.say("ouch")
+
+    common.ev3.light.on(Color.GREEN)
+    wait(120)
+    common.ev3.light.on(Color.YELLOW)
+
+
+
+
+'''
+can still turn off menu if it breaks
+'''
+USE_MENU=True
+
+if USE_MENU:
+  do_menu()
 else:
-    # do somthing with the arm
-    common.ev3.speaker.say(" i like minecraft i want to play it now")
+
+  if common.CAN_DRIVE:
+    
+      if common.HAVE_WHEEL_ARM:
+        do_part_1()       
+
+      elif common.HAVE_GYRO:
+        do_part_2()
+
+      else:
+        do_part_3()     
+
+  else:
+      # do somthing with the arm
+      common.ev3.speaker.say(" i like minecraft i want to play it now")
