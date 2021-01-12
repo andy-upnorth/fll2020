@@ -69,6 +69,8 @@ def do_step_counter():
 
     mover.drive_to_white_black_white_left_color_sensor()
 
+    robot.turn(-2)
+
     wiggle_step()
 
     turn_from_white_bar_to_arch()
@@ -176,7 +178,7 @@ def drive_to_north_line_after_treadmill():
 def do_weights_from_north_line():
 
     robot.turn(-45)
-    robot.straight(110)
+    robot.straight(180)
     robot.turn(45)
     # now facing north
 
@@ -184,12 +186,14 @@ def do_weights_from_north_line():
     common.arm.run_until_stalled(400)
 
     # This turn and drive does not always work
-    robot.turn(34)
-    robot.straight(200)
+    #robot.turn(34)
+    #robot.straight(200)
+    robot.turn(58)
+    robot.straight(170)
 
     # smash and back up
     common.arm.run_until_stalled(-200)
-    robot.straight(-120)
+    robot.straight(-190)
 
 
 def drive_home_from_weights():
@@ -259,8 +263,7 @@ def do_pullup():
 
     # do the pull up
     common.arm.run_angle(-500, 250, Stop.BRAKE)
-
-
+    common.ev3.speaker.say("time to do mine craft")
 
 
 

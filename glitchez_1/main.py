@@ -53,52 +53,60 @@ common.ev3.light.on(Color.RED)
 #beeper()
 
 
+def do_part_1():
+    #
+    # Run steps/treadmill/weight missions
+    #
+
+    # Do the missions
+    missions.do_step_counter()
+    missions.do_treadmill_after_steps()
+    missions.drive_to_north_line_after_treadmill()
+    missions.do_weights_from_north_line()
+
+    missions.drive_home_from_weights()
+
+
+def do_part_2():
+    # Run boccia/basket/bench missions
+    #
+
+    #mover.drive_to_start()  # just drive until not white
+    mover.drive_to_start_with_follow()   # try to follow black line
+
+    # follow line around corner
+    mover.follow_someting(1, turn_multiply = mover.PROPORTIONAL_GAIN_BIG_LEFT_TURN)
+
+    # follow two more white-black-white
+    mover.follow_someting(2)
+
+    missions.do_boccia()
+    missions.do_lift_basket()
+    missions.do_smash_bench()
+
+def do_part_3():
+    #
+    # Run pullup bar missions
+    #
+
+    # drive to the pullup bar and go through and back out
+    missions.drive_under_pullup_bar()
+
+    # finish the mission by doing a pullup
+    missions.do_pullup()
+
+
+
 if common.CAN_DRIVE:
    
     if common.HAVE_WHEEL_ARM:
-        #
-        # Run steps/treadmill/weight missions
-        #
-
-        # Do the missions
-        missions.do_step_counter()
-        missions.do_treadmill_after_steps()
-        missions.drive_to_north_line_after_treadmill()
-        missions.do_weights_from_north_line()
-
-        missions.drive_home_from_weights()
-
-        # Do entire treadmill mission from start instead
-        #missions.do_treadmill_from_start()
+      do_part_1()       
 
     elif common.HAVE_GYRO:
-        #
-        # Run boccia/basket/bench missions
-        #
-
-        #mover.drive_to_start()  # just drive until not white
-        mover.drive_to_start_with_follow()   # try to follow black line
-        
-        # follow line around corner
-        mover.follow_someting(1, turn_multiply = mover.PROPORTIONAL_GAIN_BIG_LEFT_TURN)
-
-        # follow two more white-black-white
-        mover.follow_someting(2)
-        
-        missions.do_boccia()
-        missions.do_lift_basket()
-        missions.do_smash_bench()
+      do_part_2()
 
     else:
-        #
-        # Run pullup bar missions
-        #
-
-        # drive to the pullup bar and go through and back out
-        missions.drive_under_pullup_bar()
-
-        # finish the mission by doing a pullup
-        missions.do_pullup()
+      do_part_3()     
 
 else:
     # do somthing with the arm

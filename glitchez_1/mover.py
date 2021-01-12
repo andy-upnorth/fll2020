@@ -214,7 +214,8 @@ def drive_to_white_black_white_left_color_sensor(speed = 110):
     common.color_sensor.color() # switch to color mode
 
     # Begin driving forward
-    robot.drive(speed, 0)
+    #   -1 turns a little to left to fix drift
+    robot.drive(speed, -0.8)
 
     # look for white 
     wait_for_color(Color.WHITE)
