@@ -244,7 +244,10 @@ def drive_under_pullup_bar():
     robot.turn(-80)
     ev3.speaker.beep()
 
-    mover.drive_to_line()
+    # back up so line sensor is before line
+    #common.beeper()
+    robot.straight(-25)
+    #mover.drive_to_line()
     ev3.speaker.beep()
 
     # Drive under pullup bar and back again
@@ -275,7 +278,7 @@ def do_boccia():
 
     # todo: drive here and line up
 
-    robot.straight(-30)
+    robot.straight(-40)
     robot.turn(22)
     common.arm.run_until_stalled(200)
 
@@ -289,7 +292,7 @@ def do_lift_basket():
 
     robot.straight(180)
     robot.straight(-10)
-    robot.turn(16)
+    robot.turn(8)
     robot.straight(15)
 
     #common.arm.run_until_stalled(100)
@@ -316,7 +319,7 @@ def do_lift_basket():
 
 def do_smash_bench():
 
-    robot.turn(165)
+    robot.turn(155)
 
     #mover.drive_to_white(-100)
 

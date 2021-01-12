@@ -20,7 +20,7 @@ COLOR_WAIT_MINIMUM = 160
 ROBOT_STRAIGHT_SPEED = 250
 
 # Set same every time - not too fast
-ROBOT_TURN_RATE = 80
+ROBOT_TURN_RATE = 70
 
 
 # Set the drive speed at 100 millimeters per second.
