@@ -316,7 +316,7 @@ def do_lift_basket():
 
 def do_smash_bench():
 
-    robot.turn(125)
+    robot.turn(165)
 
     #mover.drive_to_white(-100)
 
