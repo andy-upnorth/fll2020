@@ -283,7 +283,7 @@ def do_pullup():
 
 def do_boccia():
 
-    # todo: drive here and line up
+    # before this: drive here and line up
 
     robot.straight(-40)
     robot.turn(22)
@@ -305,6 +305,11 @@ def do_lift_basket():
     #common.arm.run_until_stalled(100)
     robot.straight(-13)
 
+    # up a tiny bit and back up a little
+    common.arm.run_angle(130, 10, Stop.BRAKE)
+    robot.straight(-10)
+
+
     # The arm keeps stalling here..........??
     # want to check 3 things 
     #  - is it stalled
@@ -316,7 +321,8 @@ def do_lift_basket():
 
     # common.arm.run_until_stalled(-100)
     #common.arm.run_angle(100, 104, Stop.BRAKE)
-    common.arm.run_angle(130, 104, Stop.BRAKE)
+    #common.arm.run_angle(130, 104, Stop.BRAKE)
+    common.arm.run_angle(130, 94, Stop.BRAKE)
 
 
     common.arm.run_until_stalled(-400)
@@ -326,7 +332,7 @@ def do_lift_basket():
 
 def do_smash_bench():
 
-    robot.turn(155)
+    robot.turn(140)
 
     #mover.drive_to_white(-100)
 
