@@ -45,21 +45,21 @@ def turn_from_white_bar_to_arch():
     robot.turn(-20)
     robot.straight(110)
     robot.turn(-20)
-    robot.straight(40)
+    robot.straight(35)
 
     # turn more and drive to line
     robot.turn(-7)
     robot.drive(90, 0)
-    #mover.wait_for_color(Color.BLACK)
     mover.wait_for_color(Color.WHITE)
     mover.wait_until_not_color(Color.WHITE)
     mover.wait_for_color_on_right_line_sensor(Color.BLACK)
     mover.wait_for_color_on_right_line_sensor(Color.WHITE)
 
     robot.stop()
+    ev3.speaker.beep()
 
     # ready to follow line
-    robot.turn(15)
+    robot.turn(25)
     robot.stop()
 
 
@@ -173,37 +173,42 @@ def drive_to_north_line_after_treadmill():
     #mover.drive_to_white_on_right_line_sensor(80)
 
     # Arrived at long line at north end
+    # Facing north now
 
 
 def do_weights_from_north_line():
 
+    # turn to left, drive some, then north
     robot.turn(-45)
     robot.straight(180)
     robot.turn(45)
     # now facing north
 
-    # now angle to weights and run into it
+    # get arm ready
     common.arm.run_until_stalled(400)
+
+    # now angle to weights and run into it
 
     # This turn and drive does not always work
     #robot.turn(34)
     #robot.straight(200)
-    robot.turn(58)
+    robot.turn(45)
     robot.straight(170)
 
     # smash and back up
     common.arm.run_until_stalled(-200)
-    robot.straight(-190)
+    robot.straight(-170)
 
 
 def drive_home_from_weights():
 
     robot.turn(-45)
-    robot.straight(-45)
+    robot.straight(-40)
     robot.turn(-90)
     mover.turn_ccw_until_right_sensor_white()
     ev3.speaker.beep()
-    robot.turn(-30)
+    #robot.turn(-30)
+    robot.turn(10)
     ev3.speaker.beep()
 
     mover.follow_distance_left_sensor(400)
