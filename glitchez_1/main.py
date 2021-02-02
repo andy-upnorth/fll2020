@@ -112,7 +112,7 @@ def do_menu():
   while True:
     if Button.UP in common.ev3.buttons.pressed():
       common.ev3.speaker.play_notes(['A4/4'])
-      arm.to_low_start()
+      #arm.to_low_start()
       do_part_1()
       common.ev3.speaker.say("ready")
 
