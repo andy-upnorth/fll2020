@@ -203,12 +203,13 @@ def do_weights_from_north_line():
 def drive_home_from_weights():
 
     robot.turn(-45)
-    robot.straight(-40)
-    robot.turn(-90)
+    robot.straight(-20)
+    robot.turn(-80)
     mover.turn_ccw_until_right_sensor_white()
     ev3.speaker.beep()
     #robot.turn(-30)
-    robot.turn(10)
+    robot.turn(-10)
+    #robot.turn(10)
     ev3.speaker.beep()
 
     mover.follow_distance_left_sensor(400)
@@ -306,8 +307,8 @@ def do_lift_basket():
     robot.straight(-13)
 
     # up a tiny bit and back up a little
-    common.arm.run_angle(130, 10, Stop.BRAKE)
-    robot.straight(-10)
+    common.arm.run_angle(130, 20, Stop.BRAKE)
+    robot.straight(-7)
 
 
     # The arm keeps stalling here..........??
@@ -322,7 +323,10 @@ def do_lift_basket():
     # common.arm.run_until_stalled(-100)
     #common.arm.run_angle(100, 104, Stop.BRAKE)
     #common.arm.run_angle(130, 104, Stop.BRAKE)
+    #common.arm.run_angle(130, 98, Stop.BRAKE)
     common.arm.run_angle(130, 94, Stop.BRAKE)
+    robot.straight(-5)
+    common.arm.run_angle(100, 12, Stop.BRAKE)
 
 
     common.arm.run_until_stalled(-400)
